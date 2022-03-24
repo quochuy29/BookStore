@@ -26,13 +26,11 @@ class GalleryController extends Controller
             }
             return $gallery->paginate(5);
         }
-        return $gallery->get();
+        return $gallery->paginate(5);
     }
 
     public function store(Request $request)
     {
-
-
         return response()->json(['sta' => $request->file]);
     }
 

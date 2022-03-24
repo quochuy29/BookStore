@@ -28,10 +28,13 @@ class BlogController extends Controller
     public function related($id)
     {
         $model = blogs::where('id', $id)->first();
-        return blogs::where('blogCate_id', $model->blogCate_id)
+        if(isset($model->blogCate_id)){
+            return blogs::where('blogCate_id', $model->blogCate_id)
             ->where('id', '!=', $id)
             ->where('updated_at', 'like', '%' . Carbon::parse($model->updated_at)->format('Y-m-d') . '%')
             ->get();
+        }
+        return [];
     }
 
     public function blogTag($slug)

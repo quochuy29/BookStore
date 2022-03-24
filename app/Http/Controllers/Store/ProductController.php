@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Service\RequestService;
 use App\Models\AuthorProduct;
 use App\Models\GenresProduct;
+use App\Models\Order_detail;
 use App\Models\Products;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -26,16 +28,16 @@ class ProductController extends Controller
         $product = new Products();
         if (count($request->all()) > 0) {
             if ($request->search) {
-                $product = $product->where('name', 'like', '%' . $request->search . '%');
+                $product = $product->where('products.name', 'like', '%' . $request->search . '%');
             }
 
             if ($request->category) {
-                $product = $product->whereIn('cate_id', $request->category);
+                $product = $product->whereIn('products.cate_id', $request->category);
             }
 
             if ($request->genres) {
                 $genres = GenresProduct::whereIn('genres_id', $request->genres)->pluck('product_id');
-                $product = $product->whereIn('id', $genres);
+                $product = $product->whereIn('products.id', $genres);
             }
             if ($request->author) {
                 $idPro = [];
@@ -58,7 +60,7 @@ class ProductController extends Controller
                                 }
                             }
                         }
-                        $product = $product->whereIn('id', $productIdMore);
+                        $product = $product->whereIn('products.id', $productIdMore);
                         break;
                     case '2':
                         foreach (array_unique($author) as $item) {
@@ -68,7 +70,7 @@ class ProductController extends Controller
                                 }
                             }
                         }
-                        $product = $product->whereIn('id', $productIdMore);
+                        $product = $product->whereIn('products.id', $productIdMore);
                         break;
                 }
             }
@@ -76,25 +78,29 @@ class ProductController extends Controller
 
             if ($min >= 0) {
                 if ($max == 0) {
-                    $product = $product->where('price', '>=', $min);
+                    $product = $product->where('products.price', '>=', $min);
                 } else {
-                    $product = $product->where('price', '<=', $max)
-                        ->where('price', '>=', $min);
+                    $product = $product->where('products.price', '<=', $max)
+                        ->where('products.price', '>=', $min);
                 }
             }
 
             if ($request->sortBy) {
                 switch ($request->sortBy) {
                     case 'new':
-                        $product = $product->where('created_at', 'like', '%' . Carbon::now()->format('Y-m') . '%');
+                        $product = $product->where('products.created_at', 'like', '%' . Carbon::now()->format('Y-m') . '%');
                         break;
                     case 'price':
                         if ($request->order == 'Giá từ thấp đến cao') {
-                            $product = $product->orderBy('price', 'desc');
+                            $product = $product->orderBy('products.price', 'desc');
                         } else {
-                            $product = $product->orderBy('price', 'asc');
+                            $product = $product->orderBy('products.price', 'asc');
                         }
                         break;
+                    case 'selling':
+                        $product = $product->join('order_detail', 'order_detail.product_id', '=', 'products.id')
+                            ->select(DB::raw('sum(order_detail.quantity) as count,products.*'))
+                            ->groupBy('products.id')->orderBy('count', 'desc');
                 }
             }
 
@@ -110,7 +116,13 @@ class ProductController extends Controller
 
     public function detail(Request $request)
     {
-        return Products::with('categories', 'galleries', 'genresProducts', 'authorProducts')->where('slug', 'like', $request->slug)->first();
+        $order = Order_detail::select(DB::raw('sum(order_detail.quantity) as count'))
+            ->join('products', 'products.id', '=', 'order_detail.product_id')
+            ->where('products.slug', 'like', $request->slug)
+            ->groupBy('products.id')->pluck('count');
+        $product = Products::with('categories', 'galleries', 'genresProducts', 'authorProducts')->where('slug', 'like', $request->slug)->first();
+
+        return response()->json(['data' => $product, 'count' => $order]);
     }
 
     public function relateProduct($id)
@@ -134,5 +146,16 @@ class ProductController extends Controller
             ->paginate(15);
 
         return $related;
+    }
+
+    public function showSearch(Request $request)
+    {
+        $product = [];
+        if ($request->search != '') {
+            $product = Products::where('name', 'like', '%' . $request->search . '%');
+            return $product->limit(6)->get();
+        }
+
+        return $product;
     }
 }

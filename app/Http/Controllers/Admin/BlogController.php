@@ -131,4 +131,9 @@ class BlogController extends Controller
 
         return response()->json(['sta' => "đã thành công"]);
     }
+
+    public function detail($id)
+    {
+        return blogs::with('blog_cate', 'user')->find($id);
+    }
 }

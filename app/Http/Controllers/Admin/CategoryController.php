@@ -45,7 +45,8 @@ class CategoryController extends Controller
         $message = [
             'name.required' => "Tên danh mục không được trống",
             'name.unique' => "Tên danh mục không được trùng",
-            'status.required' => "Hãy chọn trạng thái"
+            'status.required' => "Hãy chọn trạng thái",
+            'slug.required' => "Slug không được trống"
         ];
         $validator = Validator::make(
             $request->all(),
@@ -54,18 +55,19 @@ class CategoryController extends Controller
                     'required',
                     Rule::unique('categories')
                 ],
-                'status' => 'required'
+                'status' => 'required',
+                'slug' => 'required'
             ],
             $message
         );
         if ($validator->fails()) {
-            return response()->json(['status' => 422, 'error' => $validator->errors()], 422);
+            return response()->json(['status' => 422, 'error' => $validator->errors(), 'tu' => $request->all()], 422);
         }
         $model->fill($request->all());
 
         $model->save();
 
-        return response()->json(['sta' => "đã thành công"]);
+        return response()->json(['status' => "đã thành công"]);
     }
 
     public function update($id = null, Request $request)
@@ -73,7 +75,8 @@ class CategoryController extends Controller
         $message = [
             'name.required' => "Tên danh mục không được trống",
             'name.unique' => "Tên danh mục không được trùng",
-            'status.required' => "Hãy chọn trạng thái"
+            'status.required' => "Hãy chọn trạng thái",
+            'slug.required' => "Slug không được trống"
         ];
         $validator = Validator::make(
             $request->all(),
@@ -82,20 +85,20 @@ class CategoryController extends Controller
                     'required',
                     Rule::unique('categories')->ignore($id)
                 ],
-                'status' => 'required'
+                'status' => 'required',
+                'slug' => 'required'
             ],
             $message
         );
         if ($validator->fails()) {
             return response()->json(['status' => 422, 'error' => $validator->errors()], 422);
         }
+
         $model = Categories::find($id);
-
         $model->fill($request->all());
-
         $model->save();
 
-        return response()->json(['sta' => "update thành công"]);
+        return response()->json(['status' => "update thành công"]);
     }
 
     public function updateForm($id)

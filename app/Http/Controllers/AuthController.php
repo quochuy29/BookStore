@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Roles;
 use App\Models\User;
+use App\Models\UserHasRoles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -12,6 +14,11 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+    public function checkRole()
+    {
+        $role = UserHasRoles::where('user_id',Auth::id())->first();
+        return $role;
+    }
     public function register($id = null, Request $request)
     {
         $message = [
@@ -58,7 +65,7 @@ class AuthController extends Controller
         );
 
         if ($validator->fails()) {
-            return response()->json(['status' => 422, 'error' => $validator->errors(),'tu'=>$request->all()], 422);
+            return response()->json(['status' => 422, 'error' => $validator->errors(), 'tu' => $request->all()], 422);
         }
 
         $model = new User();

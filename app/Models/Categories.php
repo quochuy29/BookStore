@@ -10,5 +10,5 @@ class Categories extends Model
     use HasFactory;
     public $table = 'categories';
 
-    public $fillable = ['name','status'];
+    public $fillable = ['name','status','slug'];
 }

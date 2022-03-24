@@ -69,6 +69,7 @@ class ProductController extends Controller
                 'name.required' => "Hãy nhập vào tên thú cưng",
                 'name.unique' => "Tên thú cưng đã tồn tại",
                 'name.min' => "Tên thú cưng ít nhất 3 kí tự",
+                'slug.required' => "Slug không được bỏ trống",
                 'cate_id.required' => "Hãy chọn danh mục",
                 'status.required' => "Hãy chọn trạng thái",
                 'price.required' => "Hãy nhập giá thú cưng",
@@ -91,7 +92,8 @@ class ProductController extends Controller
                     'status' => 'required',
                     'price' => 'required|numeric',
                     'quantity' => 'required|numeric',
-                    'image' => 'required|mimes:jpg,bmp,png,jpeg|max:2048'
+                    'image' => 'required|mimes:jpg,bmp,png,jpeg|max:2048',
+                    'slug' => 'required'
                 ],
                 $message
             );
@@ -195,7 +197,7 @@ class ProductController extends Controller
 
             $this->AuthorProduct->EditAuthor($author, $authorProduct, $id);
 
-            return response()->json(['sta' => "update thành công"]);
+            return response()->json(['status' => "update thành công"]);
         }
     }
 
