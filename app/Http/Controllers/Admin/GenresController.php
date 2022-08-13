@@ -43,8 +43,8 @@ class GenresController extends Controller
     {
         $model = new Genres();
         $message = [
-            'name.required' => "Tên danh mục không được trống",
-            'name.unique' => "Tên danh mục không được trùng",
+            'name.required' => "Tên thể loại không được trống",
+            'name.unique' => "Tên thể loại không được trùng",
             'status.required' => "Hãy chọn trạng thái"
         ];
         $validator = Validator::make(
@@ -71,8 +71,8 @@ class GenresController extends Controller
     public function update($id = null, Request $request)
     {
         $message = [
-            'name.required' => "Tên danh mục không được trống",
-            'name.unique' => "Tên danh mục không được trùng",
+            'name.required' => "Tên thể loại không được trống",
+            'name.unique' => "Tên thể loại không được trùng",
             'status.required' => "Hãy chọn trạng thái"
         ];
         $validator = Validator::make(

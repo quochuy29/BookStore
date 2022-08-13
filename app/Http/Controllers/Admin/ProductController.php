@@ -163,6 +163,7 @@ class ProductController extends Controller
                 'quantity.required' => 'Hãy nhập số lượng',
                 'quantity.numeric' => 'Số lượng phải là số'
             ];
+            
             $validator = Validator::make(
                 $request->all(),
                 [
@@ -204,7 +205,12 @@ class ProductController extends Controller
     public function delete($id)
     {
         $model = Products::find($id);
-        return $model->delete();
+        $model->galleries->delete();
+        $model->genresProducts->delete();
+        $model->authorProducts->delete();
+        $model->orderDetail->delete();
+        $model->delete();
+        return response()->json(['status'=> 'Xoá sản phẩm thành công']);
     }
 
     public function detail($id)

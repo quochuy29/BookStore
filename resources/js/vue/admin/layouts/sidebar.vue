@@ -18,14 +18,14 @@
             data-accordion="false"
           >
             <li class="nav-item">
-              <a href="" class="nav-link border border-secondary rounded">
+              <router-link to="/" class="nav-link border border-secondary rounded">
                 <i class="fa fa-home"></i>
                 <p>Trang chủ</p>
-              </a>
+              </router-link>
             </li>
             <li class="nav-header">Sản phẩm</li>
             <li class="nav-item border-bottom border-secondary">
-              <a href="#" class="nav-link">
+              <a href="javascript:void(0);" class="nav-link">
                 <i class="fas fa-project-diagram"></i>
                 <p>
                   Sản phẩm & Danh mục
@@ -59,9 +59,27 @@
                 </li>
               </ul>
             </li>
+            <li class="nav-header">Users</li>
+            <li class="nav-item">
+              <a href="javascript:void(0);" class="nav-link">
+                <i class="fas fa-swatchbook"></i>
+                <p>
+                  Users
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <router-link :to="{ name: 'user' }" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Danh sách người dùng</p>
+                  </router-link>
+                </li>
+              </ul>
+            </li>
             <li class="nav-header">Thể loại sách</li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="javascript:void(0);" class="nav-link">
                 <i class="fas fa-paw"></i>
                 <p>
                   Quản lý thể loại sách
@@ -78,7 +96,7 @@
               </ul>
             </li>
             <li class="nav-item border-bottom border-secondary">
-              <a href="#" class="nav-link">
+              <a href="javascript:void(0);" class="nav-link">
                 <i class="fas fa-cat"></i>
                 <p>
                   Quản lý thư viện hình ảnh
@@ -96,7 +114,7 @@
             </li>
             <li class="nav-header">Bài viết</li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="javascript:void(0);" class="nav-link">
                 <i class="fas fa-swatchbook"></i>
                 <p>
                   Bài viết
@@ -114,7 +132,7 @@
             </li>
             <li class="nav-header">Tag</li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="javascript:void(0)" class="nav-link">
                 <i class="fas fa-swatchbook"></i>
                 <p>
                   Tag
@@ -132,7 +150,7 @@
             </li>
             <li class="nav-header">Danh mục bài viết</li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="javascript:void(0);" class="nav-link">
                 <i class="fas fa-swatchbook"></i>
                 <p>
                   Danh mục bài viết
@@ -144,6 +162,24 @@
                   <router-link :to="{ name: 'categoryBlog' }" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Danh sách danh mục</p>
+                  </router-link>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-header">Phân quyền</li>
+            <li class="nav-item">
+              <a href="javascript:void(0);" class="nav-link">
+                <i class="fas fa-paw"></i>
+                <p>
+                  Quản lý phân quyền
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <router-link to="/admin/permission" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Danh sách phân quyền</p>
                   </router-link>
                 </li>
               </ul>

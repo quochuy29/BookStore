@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Page403 v-if="role != 1"></Page403>
-    <div class="" v-if="role == 1">
+    <Page403 v-if="role != 1 && role != 5"></Page403>
+    <div class="" v-if="role == 1 || role == 5">
       <Header :key="$route.fullPath"></Header>
       <Sidebar v-bind:permission="permission" v-bind:roles="roles"></Sidebar>
       <div class="content-wrapper">
@@ -19,7 +19,6 @@ import Footer from "./footer.vue";
 import Page403 from "../../errors/403.vue";
 import Page404 from "../../errors/404.vue";
 import Permission from "../../lib/permission";
-import permission from "../../lib/permission";
 export default {
   name: "MainAdmin",
   data() {
@@ -46,8 +45,8 @@ export default {
     checkPermissionRole() {
       let data = Permission.permission();
       data.then((response) => {
-        this.permission = permission.hasPermission(response.data.permission);
-        this.roles = permission.harRole(response.data.role);
+        this.permission = Permission.hasPermission(response.data.permission);
+        this.roles = Permission.harRole(response.data.role);
       });
     },
     checkRole() {

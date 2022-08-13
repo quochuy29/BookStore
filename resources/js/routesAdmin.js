@@ -22,7 +22,9 @@ import DetailBlog from './vue/user/store/blog/DetailBlog'
 import ListBlogTag from './vue/user/store/blog/ListBlogTag'
 import Products from './vue/user/store/products/ListProduct'
 import DetailBlogs from './vue/admin/blogs/DetailBlog'
+import ListPermission from './vue/admin/permissions/ListPermission'
 import Page404 from './vue/errors/404'
+import ListUser from './vue/admin/users/ListUser'
 export default {
     mode: 'history',
     base: process.env.BASE_URL,
@@ -167,6 +169,17 @@ export default {
                 {
                     path: '/profile',
                     component: Profile,
+                    meta: { requiresAuth: true }
+                },
+                {
+                    path: 'permission',
+                    component: ListPermission,
+                    meta: { requiresAuth: true }
+                },
+                {
+                    path: 'listUser',
+                    component: ListUser,
+                    name: 'user',
                     meta: { requiresAuth: true }
                 },
             ],

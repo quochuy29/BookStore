@@ -1,4 +1,6 @@
 searchForm = document.querySelector('.search-form');
-document.querySelector('#search-btn').onclick = () => {
-    searchForm.classList.toggle('active');
+if (document.querySelector('#search-btn')) {
+    document.querySelector('#search-btn').onclick = () => {
+        searchForm.classList.toggle('active');
+    }
 }

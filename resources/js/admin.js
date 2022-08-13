@@ -5,11 +5,7 @@ import VueRouter from 'vue-router';
 import routesAdmin from './routesAdmin';
 import App from './app-client.vue';
 import VModal from 'vue-js-modal';
-// import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
-// Import Bootstrap an BootstrapVue CSS files (order is important)
-// import 'bootstrap/dist/css/bootstrap.css'
-// import 'bootstrap-vue/dist/bootstrap-vue.css'
 import Select2 from 'v-select2-component';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
@@ -23,10 +19,7 @@ import VueGlide from 'vue-glide-js'
 import 'vue-glide-js/dist/vue-glide.css'
 import 'vue-awesome/icons/flag'
 
-// or import all icons if you don't care about bundle size
 import 'vue-awesome/icons'
-
-/* Register component with one of 2 methods */
 
 import Icon from 'vue-awesome/components/Icon'
 import VueScrollReveal from 'vue-scroll-reveal';

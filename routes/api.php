@@ -6,8 +6,11 @@ use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\GenresController;
+use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Permissions;
 use App\Http\Controllers\Store\AuthorController as StoreAuthorController;
@@ -39,6 +42,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::prefix('/users')
+    ->middleware('auth:sanctum')
+    ->controller(UserController::class)
+    ->group(function () {
+        Route::get('', 'index');
+        Route::get('/updateForm/{id}','updateForm')->middleware('permission:admin');
+        Route::post('/store','store');
+    });
 
 Route::prefix('/categories')
     ->controller(CategoryController::class)
@@ -215,5 +226,29 @@ Route::prefix('danh-muc-bai-viet')
 Route::prefix('phan-quyen')
     ->controller(Permissions::class)
     ->group(function () {
-        Route::get('', 'index')->middleware('auth:sanctum');;
+        Route::get('', 'index')->middleware('auth:sanctum');
+    });
+
+Route::prefix('permission')
+    ->controller(PermissionController::class)
+    ->group(function () {
+        Route::get('', 'index')->middleware('auth:sanctum');
+        Route::get('get-permission', 'getPermission');
+        Route::post('add-permission', 'addForm');
+        Route::post('edit-permission/{id}', 'editForm');
+        Route::delete('delete-permission/{id}', 'delete');
+    });
+
+Route::prefix('role')
+    ->controller(RoleController::class)
+    ->group(function () {
+        Route::post('add-role', 'addForm');
+        Route::post('give-role', 'giveRole');
+        Route::get('edit-give-role/{id}', 'editRole');
+        Route::get('get-roleUser', 'getRoleUser');
+        Route::get('edit-role/{id}', 'editForm');
+        Route::post('update/{id}', 'update');
+        Route::post('update-give-role/{id}', 'updateUserRole');
+        Route::delete('delete/{id}', 'delete');
+        Route::delete('delete-role/{id}', 'deleteRole');
     });

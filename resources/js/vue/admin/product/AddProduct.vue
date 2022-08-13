@@ -270,18 +270,6 @@ export default {
         console.log(error);
       });
   },
-  // mounted() {
-  //   this.$nextTick(() => {
-  //     $("#category").select2({
-  //       dropdownParent: $("#add-form"),
-  //       placeholder: "Chọn danh mục",
-  //     });
-  //     $("#genres").select2({
-  //       dropdownParent: $("#add-form"),
-  //       placeholder: "Chọn danh mục",
-  //     });
-  //   });
-  // },
   methods: {
     handleImageAdded: function (file, Editor, cursorLocation, resetUploader) {
       var formData = new FormData();

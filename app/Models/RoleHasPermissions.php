@@ -11,6 +11,8 @@ class RoleHasPermissions extends Model
 
     public $table = "rolehaspermissions";
 
+    public $fillable = ['role_id','permission_id'];
+
     public function permission()
     {
         return $this->belongsToMany(Permissions::class, 'rolehaspermissions','id','permission_id');
