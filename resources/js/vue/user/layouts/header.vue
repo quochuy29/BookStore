@@ -152,6 +152,7 @@ export default {
     }
   },
   mounted() {
+    console.log(1);
     this.loadMenu();
     this.$root.$on("myEvent", (text) => {
       this.counter = text;

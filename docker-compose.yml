@@ -38,15 +38,6 @@ services:
       - bookstore_app
     environment:
         - APP_CONTAINER_LINK=bookstore_app:9000
-  blackfire:
-    image: blackfire/blackfire:latest
-    ports: ["8308"]
-    container_name: bookstore_blackfire
-    restart: always
-    init: true
-    environment:
-      BLACKFIRE_SERVER_ID: e0b30241-a25d-4162-9ebb-329f784f1fc7
-      BLACKFIRE_SERVER_TOKEN: 3ac2260e038f138a5bca515b72c0205117d886777cf6472b14beabb704e06aa1
 
 networks:
   default:
